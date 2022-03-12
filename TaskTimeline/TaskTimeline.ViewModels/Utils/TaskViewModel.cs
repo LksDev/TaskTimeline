@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+using System.Diagnostics;
+using System.Threading;
 using TaskTimeline.Models;
 using TaskTimeline.ViewModels.Commands;
 
@@ -20,15 +17,16 @@ namespace TaskTimeline.ViewModels.Utils {
             set { SetProperty(ref this.taskname, value, nameof(Taskname)); }
         }
 
-        private DateTime time;
-        public DateTime Time {
-            get { return time; }
-            private set { SetProperty(ref this.time, value, nameof(Time)); }
+        private string currentTime;
+
+        public string CurrentTime {
+            get { return this.currentTime; }
+            set { SetProperty(ref this.currentTime, value); }
         }
 
-        private MyTask myTask;
+        public Timer timer;
 
-        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        private MyTask myTask;
         public CommandBase ControlTimerCommand { get; }
         public TaskViewModel(MyTask argMyTask) {
             this.ControlTimerCommand = new ControlTimerCommand() { ViewModel = this };
@@ -37,8 +35,9 @@ namespace TaskTimeline.ViewModels.Utils {
 
             this.id = myTask.Id;
             this.Taskname = myTask.Name;
-            this.myTask.Timer.Elapsed += OnTimeEvent;
 
+            timer = new Timer(Callback, new AutoResetEvent(false), 100,250);
+            
         }
 
         public void StartTimer() {
@@ -48,11 +47,10 @@ namespace TaskTimeline.ViewModels.Utils {
         public void StopTimer() {
             myTask.Stop();
         }
-
-        private void OnTimeEvent(object source, ElapsedEventArgs e) {
-
-            //this.Time = e.SignalTime;
+        int i = 0;
+        private void Callback(object stateInfo) {
+            CurrentTime = i.ToString();
+            i++;
         }
-
     }
 }

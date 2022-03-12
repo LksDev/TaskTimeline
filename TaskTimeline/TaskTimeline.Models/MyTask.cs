@@ -21,14 +21,24 @@ namespace TaskTimeline.Models {
 			this.name = argName;
 			this.timer = new Timer();
 			this.timer.Stop();
-			
+			this.timer.Interval = 1000;
+            this.timer.Elapsed += Timer_Elapsed;
 		}
 
-        public void Start() {
+
+		private int seconds;
+		private void Timer_Elapsed(object sender, ElapsedEventArgs e) {
+			seconds++;
+		}
+
+		public void Start() {
             this.timer.Start();
         }
         public void Stop() {
             this.timer.Stop();
         }
+
+		public int GetSeconds() => seconds;
+
 	}
 }
