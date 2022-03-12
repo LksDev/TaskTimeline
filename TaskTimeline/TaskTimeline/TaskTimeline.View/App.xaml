@@ -1,0 +1,21 @@
+﻿<Application x:Class="TaskTimeline.View.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:v="clr-namespace:TaskTimeline.View"
+             xmlns:vUtils="clr-namespace:TaskTimeline.View.Utils"
+             xmlns:vm="clr-namespace:TaskTimeline.ViewModels;assembly=TaskTimeline.ViewModels"
+             xmlns:vmUtils="clr-namespace:TaskTimeline.ViewModels.Utils;assembly=TaskTimeline.ViewModels"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <DataTemplate DataType="{x:Type vm:MainViewModel}">
+            <v:MainWindow Content="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TasksViewModel}">
+            <v:TasksView Content="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmUtils:TaskViewModel}">
+            <vUtils:TaskView Content="{Binding}"/>
+        </DataTemplate>
+
+    </Application.Resources>
+</Application>

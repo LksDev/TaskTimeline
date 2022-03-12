@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="TaskTimeline.View.Utils.TaskView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vmUtils="clr-namespace:TaskTimeline.ViewModels.Utils;assembly=TaskTimeline.ViewModels"
+             xmlns:local="clr-namespace:TaskTimeline.View.Utils"
+             mc:Ignorable="d" 
+             d:DesignHeight="35" d:DesignWidth="800">
+    <UserControl.ContentTemplate>
+        <DataTemplate DataType="{x:Type vmUtils:TaskViewModel}">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="225"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Grid.Column="0" Margin="5,0" MinWidth="350" BorderBrush="LightGray" BorderThickness="1" Height="35" VerticalContentAlignment="Center"
+                            Content="{Binding Path=Taskname, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Grid.Row="0" Grid.Column="1" Width="35" FontSize="22" Background="Transparent" BorderBrush="Transparent"
+                        Command="{Binding Path=ControlTimerCommand}" Tag="{Binding Path=ControlTimerCommand.Run}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Content" Value="&#9208;"/>
+                            <Style.Triggers>
+                                <Trigger Property="Tag" Value="True">
+                                    <Setter Property="Content" Value="&#9209;"/>
+                                </Trigger>
+                                <Trigger Property="Tag" Value="False">
+                                    <Setter Property="Content" Value="&#9208;"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+
+                    </Button.Style>
+                </Button>
+                <Label Grid.Row="0" Grid.Column="2" Margin="5,0" BorderBrush="Black" BorderThickness="1" Height="35" 
+                       Content="{Binding Path=Time, ConverterCulture=de-DE}"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.ContentTemplate>
+</UserControl>
